@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Border-Radius Previewer</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;500;600&display=swap" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+</head>
+<body>
+
+    <h1>BORDER RADIUS PREVIEWER</h1>
+    <h4>BY YSRAEL MORENO</h4>
+    <div id="inputs">
+        <div class="inputContainers">
+            <input class="input" type="text" placeholder="0" id="border-top-left">
+
+            <input class="input" type="text" placeholder="0" id="border-bottom-left">
+        </div>
+        <div  id="container"></div>
+        <div class="inputContainers">
+            <input class="input" type="text" placeholder="0" id="border-top-right">
+
+            <input class="input" type="text" placeholder="0" id="border-bottom-right">
+        </div>
+    </div>
+
+    <script>
+        const container = document.querySelector('#container');
+
+        const inputBorderTopLeft = document.querySelector('#border-top-left');
+        const inputBorderTopRight = document.querySelector('#border-top-right');
+        const inputBorderBottomLeft = document.querySelector('#border-bottom-left');
+        const inputBorderBottomRight = document.querySelector('#border-bottom-right');
+
+        container.style.backgroundColor = "white";
+
+
+        inputBorderBottomLeft.addEventListener('change', (event) => {
+            container.style.borderBottomLeftRadius = `${event.target.value}px`;
+        });
+
+        inputBorderBottomRight.addEventListener('change', (event) => {
+            container.style.borderBottomRightRadius = `${event.target.value}px`;
+        });
+
+        inputBorderTopLeft.addEventListener('change', (event) => {
+            container.style.borderTopLeftRadius = `${event.target.value}px`;
+        });
+
+        inputBorderTopRight.addEventListener('change', (event) => {
+            container.style.borderTopRightRadius = `${event.target.value}px`;
+        });
+
+        let intervaledContainer;
+        let copiedTitle;
+        container.addEventListener('click', (event) => {
+           const textArea = document.createElement('textarea');
+           document.body.appendChild(textArea);
+
+           console.log(!inputBorderBottomLeft.value);
+
+           const css = `border-bottom-top-left: ${inputBorderTopLeft.value}px;
+border-bottom-top-right: ${inputBorderTopRight.value}px;
+border-bottom-bottom-left: ${inputBorderBottomLeft.value}px;
+border-bottom-bottom-right: ${inputBorderBottomRight.value}px;`;
+
+           textArea.value = css;
+
+           console.log(textArea.value)
+           textArea.select();
+           textArea.setSelectionRange(0, 99999);
+           document.execCommand("copy")
+           textArea.style.display = 'none'
+
+           document.body.removeChild(textArea)
+
+            intervaledContainer = setTimeout(setCopiedText, 10);
+            clearTimeout();
+        })
+
+        function setCopiedText() {
+            container.style.backgroundColor = "green";
+
+            copiedTitle = document.createTextNode("Copied! :)");
+
+            container.appendChild(copiedTitle);
+
+            clearInterval(intervaledContainer)
+        }
+
+        function clearTimeout() {
+            setTimeout(() => {
+                container.style.backgroundColor = "white";
+                container.removeChild(copiedTitle)
+            }, 1000)
+
+        }
+
+    </script>
+</body>
+</html>
